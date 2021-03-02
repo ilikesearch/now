@@ -8,7 +8,7 @@ int main()
 
     auto c_now = std::chrono::system_clock::to_time_t(now);
 
-    auto format = "%Y-%m-%d %X";
+    auto format = "%Y-%m-%d %X %a";
 
     auto time = std::put_time(std::localtime(&c_now), format);
 
