@@ -2,15 +2,28 @@
 #include <iomanip>
 #include <iostream>
 
-int main()
+#include "cxxopts.hpp"
+
+using std::chrono::system_clock;
+
+int main(int argc, char **argv)
 {
-    auto now = std::chrono::system_clock::now();
+    cxxopts::Options opts("now", "print now");
 
-    auto c_now = std::chrono::system_clock::to_time_t(now);
+    opts.add_options()("f,format", "specify time format",
+                       cxxopts::value<std::string>()->default_value("%Y-%m-%d %X %a"),
+                       "<string>")("h,help", "print help and exit");
 
-    auto format = "%Y-%m-%d %X %a";
+    auto args = opts.parse(argc, argv);
 
-    auto time = std::put_time(std::localtime(&c_now), format);
+    if (args.count("help"))
+    {
+        std::cout << opts.help() << std::endl;
+        exit(0);
+    }
 
-    std::cout << time << std::endl;
+    auto time = system_clock::to_time_t(system_clock::now());
+    auto format = args["format"].as<std::string>().c_str();
+    auto formatted = std::put_time(std::localtime(&time), format);
+    std::cout << formatted << std::endl;
 }
