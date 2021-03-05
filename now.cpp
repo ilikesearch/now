@@ -6,24 +6,32 @@
 
 using std::chrono::system_clock;
 
-int main(int argc, char **argv)
-{
-    cxxopts::Options opts("now", "print now");
+auto parse_args(cxxopts::Options &opts, int argc, char **argv) {
+  try {
+    return opts.parse(argc, argv);
+  } catch (const cxxopts::OptionException &) {
+    std::cout << opts.help() << std::endl;
+    exit(-1);
+  }
+}
 
-    opts.add_options()("f,format", "specify time format",
-                       cxxopts::value<std::string>()->default_value("%Y-%m-%d %X %a"),
-                       "<string>")("h,help", "print help and exit");
+int main(int argc, char **argv) {
+  cxxopts::Options opts("now", "print now");
 
-    auto args = opts.parse(argc, argv);
+  opts.add_options()(
+      "f,format", "specify time format",
+      cxxopts::value<std::string>()->default_value("%Y-%m-%d %X %a"),
+      "<string>")("h,help", "print help and exit");
 
-    if (args.count("help"))
-    {
-        std::cout << opts.help() << std::endl;
-        exit(0);
-    }
+  auto args = parse_args(opts, argc, argv);
 
-    auto time = system_clock::to_time_t(system_clock::now());
-    auto format = args["format"].as<std::string>().c_str();
-    auto formatted = std::put_time(std::localtime(&time), format);
-    std::cout << formatted << std::endl;
+  if (args.count("help")) {
+    std::cout << opts.help() << std::endl;
+    exit(0);
+  }
+
+  auto time = system_clock::to_time_t(system_clock::now());
+  auto format = args["format"].as<std::string>().c_str();
+  auto formatted = std::put_time(std::localtime(&time), format);
+  std::cout << formatted << std::endl;
 }
