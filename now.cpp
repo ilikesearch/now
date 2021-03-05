@@ -8,7 +8,7 @@ using std::chrono::system_clock;
 
 int main(int argc, char **argv)
 {
-    cxxopts::Options opts("now", "print now");
+    cxxopts::Options opts("now");
 
     opts.add_options()("f,format", "specify time format",
                        cxxopts::value<std::string>()->default_value("%Y-%m-%d %X %a"),
