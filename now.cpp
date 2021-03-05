@@ -16,7 +16,7 @@ auto parse_args(cxxopts::Options &opts, int argc, char **argv) {
 }
 
 int main(int argc, char **argv) {
-  cxxopts::Options opts("now", "print now");
+  cxxopts::Options opts("now");
 
   opts.add_options()(
       "f,format", "specify time format",
