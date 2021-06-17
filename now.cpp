@@ -8,16 +8,21 @@ using namespace std;
 using namespace chrono;
 using namespace cxxopts;
 
-auto parse_args(Options &opts, int argc, char **argv) {
-  try {
+auto parse_args(Options &opts, int argc, char **argv)
+{
+  try
+  {
     return opts.parse(argc, argv);
-  } catch (const OptionException &) {
+  }
+  catch (const OptionException &)
+  {
     cout << opts.help() << endl;
     exit(-1);
   }
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   Options opts("now");
 
   opts.add_options()(
@@ -27,7 +32,8 @@ int main(int argc, char **argv) {
 
   auto args = parse_args(opts, argc, argv);
 
-  if (args.count("help")) {
+  if (args.count("help"))
+  {
     cout << opts.help() << endl;
     exit(0);
   }
