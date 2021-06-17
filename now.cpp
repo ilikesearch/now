@@ -6,16 +6,21 @@
 
 using std::chrono::system_clock;
 
-auto parse_args(cxxopts::Options &opts, int argc, char **argv) {
-  try {
+auto parse_args(cxxopts::Options &opts, int argc, char **argv)
+{
+  try
+  {
     return opts.parse(argc, argv);
-  } catch (const cxxopts::OptionException &) {
+  }
+  catch (const cxxopts::OptionException &)
+  {
     std::cout << opts.help() << std::endl;
     exit(-1);
   }
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   cxxopts::Options opts("now");
 
   opts.add_options()(
@@ -25,7 +30,8 @@ int main(int argc, char **argv) {
 
   auto args = parse_args(opts, argc, argv);
 
-  if (args.count("help")) {
+  if (args.count("help"))
+  {
     std::cout << opts.help() << std::endl;
     exit(0);
   }
