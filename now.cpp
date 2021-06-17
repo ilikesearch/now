@@ -24,7 +24,8 @@ int main(int argc, char **argv) {
     exit(-1);
   }
 
-  if (args.count("help")) {
+  if (args.count("help"))
+  {
     cout << opts.help() << endl;
     exit(0);
   }
