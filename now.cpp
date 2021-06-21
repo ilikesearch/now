@@ -8,28 +8,22 @@ using namespace std;
 using namespace chrono;
 using namespace cxxopts;
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
   Options opts("now");
 
-  opts.add_options()(
-      "f,format", "specify time format",
-      value<string>()->default_value("%Y-%m-%d %X %a"),
-      "<string>")("h,help", "print help and exit");
+  opts.add_options()("f,format", "specify time format",
+                     value<string>()->default_value("%Y-%m-%d %X %a"),
+                     "<string>")("h,help", "print help and exit");
 
   ParseResult args;
-  try
-  {
+  try {
     args = opts.parse(argc, argv);
-  }
-  catch (const OptionException &)
-  {
+  } catch (const OptionException &) {
     cout << opts.help() << endl;
     exit(-1);
   }
 
-  if (args.count("help"))
-  {
+  if (args.count("help")) {
     cout << opts.help() << endl;
     exit(0);
   }
